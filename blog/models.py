@@ -30,6 +30,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True) # Automatically set the field to now when the object is first created.
     updated = models.DateTimeField(auto_now=True) #Automatically set the field to now every time the object is saved.
     status  = models.CharField(max_length=100 ,choices=STATUS_CHOICES, default='draft')
+    restrict_comment = models.BooleanField(default=False)
 
     class Meta:
             ordering = ['-id']

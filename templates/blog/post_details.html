@@ -51,29 +51,37 @@
         </div>
 
     {% endif %}
-    <br>
-    <h2>add your comment</h2>
-    <br>
 
-    <div class="container-fluid mt-2">
-        <div class="form-group row">
-            <form method="post" class="comment-form" action=".">
-                {% csrf_token %}
-                {{ comment_form.as_p }}
-                {% if request.user.is_authenticated %}
-                    <input type="submit" value="Submit" class="btn btn-outline-success">
-                {% else %}
-                    <input type="submit" value="Submit" class="btn btn-outline-success" disabled>
-                {% endif %}
-            </form>
+    {% if not post.restrict_comment %}
+
+        <br>
+        <h2>add your comment</h2>
+        <br>
+
+        <div class="container-fluid mt-2">
+            <div class="form-group row">
+                <form method="post" class="comment-form" action=".">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    {% if request.user.is_authenticated %}
+                        <input type="submit" value="Submit" class="btn btn-outline-success">
+                    {% else %}
+                        <input type="submit" value="Submit" class="btn btn-outline-success" disabled>
+                    {% endif %}
+                </form>
+            </div>
         </div>
-    </div>
 
-    {% include 'blog/comment.html' %}
+        {% include 'blog/comment.html' %}
+
+    {% else %}
 
 
+        <p style="color: red;margin-top: 40px">comments are restricted</p>
 
 
+    {% endif %}
+    
 {% endblock %}
 
 

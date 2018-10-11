@@ -9,6 +9,7 @@ class PostCreateForm(forms.ModelForm):
             'title',
             'body',
             'status',
+            'restrict_comment',
         )
 
 class UserLoginForm(forms.Form):
@@ -69,6 +70,7 @@ class PostEditForm(forms.ModelForm):
             'title',
             'body',
             'status',
+            'restrict_comment',
         )
 
 class CommentForm(forms.ModelForm):
