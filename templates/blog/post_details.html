@@ -1,0 +1,80 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    {% include 'blog/alerts.html' %}
+
+    <h3>
+        <i>{{ post.title }}</i>
+    </h3>
+    <p>
+        Author : {{ post.author }}
+    </p>
+
+    <small style="margin-top: -10px;float: left">{{ post.created }}</small>
+    <div style="height: 10px;"></div>
+    <hr>
+    <p>{{ post.body }}</p>
+
+
+    <div class="row gallery">
+        {% for p in post.images_set.all %}
+            {% if p.image %}
+                <div class="col-md-3">
+                    <img src="{{ p.image.url }}" alt="Image Not Found" class="img-thumbnail">
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <div id="like_section">
+        {% include 'blog/like_section.html' %}
+    </div>
+
+    {% if post.author == request.user %}
+
+        <div class="section-1" style="float:right;">
+
+            <a href="{% url 'post_edit' id=post.id %}">
+
+                <button type="button" class="btn btn-primary">Edit</button>
+
+            </a>
+
+            <a href="{% url 'post_delete' id=post.id %}">
+
+                <button type="button" id="delete" class="btn btn-danger">Delete</button>
+
+            </a>
+
+        </div>
+
+    {% endif %}
+    <br>
+    <h2>add your comment</h2>
+    <br>
+
+    <div class="container-fluid mt-2">
+        <div class="form-group row">
+            <form method="post" class="comment-form" action=".">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                {% if request.user.is_authenticated %}
+                    <input type="submit" value="Submit" class="btn btn-outline-success">
+                {% else %}
+                    <input type="submit" value="Submit" class="btn btn-outline-success" disabled>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    {% include 'blog/comment.html' %}
+
+
+
+
+{% endblock %}
+
+
+

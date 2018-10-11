@@ -1,0 +1,82 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    {% include 'blog/alerts.html' %}
+
+
+
+    <div class="row">
+
+        {% for i in post %}
+
+            <div class="col-md-6">
+
+                <div class="img-thumbnail">
+
+                    <a href="{% url 'post_detail' i.id i.slug %}">
+                        <i>{{ i.title }}</i>
+                    </a>
+
+                    <small style="float: right">{{ i.created }}</small>
+                    <br>
+
+                    Author : {{ i.author }}<br>
+                    <p>{{ i.body }}</p>
+
+                </div>
+
+            </div>
+            <br>
+
+        {% empty %}
+
+            <div class="container-fluid">
+
+                <p>No Posts Found on search : {{ query }}</p>
+
+            </div>
+
+        {% endfor %}
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+
+            {% if post.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ post.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+            {% endif %}
+
+
+
+            {% for p in page_range %}
+
+                {% if post.number == p %}
+                    <li class="page-item active"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                {% endif %}
+
+            {% endfor %}
+
+
+            {% if post.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ post.next_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            {% endif %}
+
+
+        </ul>
+    </nav>
+
+{% endblock %}
+

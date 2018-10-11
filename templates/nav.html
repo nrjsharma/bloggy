@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">SocialMedia</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+        <form class="form-inline my-2 my-lg-0" action="{% url 'post_list' %}">
+
+            {% if query %}
+
+                <input class="form-control mr-sm-2" type="search" value="{{ query }}" placeholder="Search" aria-label="Search" name="q">
+
+            {% else %}
+
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+
+            {% endif %}
+
+
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    </ul>
+
+      <ul class="navbar-nav">
+
+
+
+          <li class="nav-item">
+
+              {% if user.is_authenticated %}
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        {% if  request.user.profile.photo%}
+
+                            <img src="{{ request.user.profile.photo.url }}" style="width: 30px;height: 35px">
+
+                        {% else %}
+
+                            <img src="/static/img/default.png" style="width: 30px;height: 35px">
+
+                        {% endif  %}
+
+
+                        <span>Hi, {{ request.user|capfirst }}</span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a href="{% url 'edit_profile' %}" class="dropdown-item">My Profile</a>
+                        <a href="{% url 'post_create' %}" class="dropdown-item">Create Post</a>
+                      <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
+                    </div>
+                  </li>
+
+
+
+              {% else %}
+
+                   <a href="login" class="navbar-link">Login</a>
+
+              {% endif %}
+
+
+
+          </li>
+
+      </ul>
+
+  </div>
+</nav>
