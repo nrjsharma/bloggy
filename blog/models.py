@@ -31,6 +31,7 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True) #Automatically set the field to now every time the object is saved.
     status  = models.CharField(max_length=100 ,choices=STATUS_CHOICES, default='draft')
     restrict_comment = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
 
     class Meta:
             ordering = ['-id']
